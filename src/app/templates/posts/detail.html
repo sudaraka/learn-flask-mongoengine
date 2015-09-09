@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import '_forms.html' as forms %}
 
 {% block page_header %}
     <div class="page-header">
@@ -21,4 +22,12 @@
             {{ comment.text }}
         {% endfor %}
     {% endif %}
+
+    <hr>
+
+    <h2>Add a Comment</h2>
+    <form action="/{{ post.slug}}" method="post">
+        {{ forms.render(form) }}
+        <div class="actions"><input class="btn btn-primary" type="submit" value="comment"></div>
+    </form>
 {% endblock %}
