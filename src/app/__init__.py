@@ -15,8 +15,10 @@ def register_blueprints(target_app):
     """ Register blueprints in the application """
 
     from ..views import posts
+    from ..views import admin
 
     target_app.register_blueprint(posts)
+    target_app.register_blueprint(admin)
 
 
 register_blueprints(app)
