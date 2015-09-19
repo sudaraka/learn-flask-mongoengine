@@ -7,7 +7,7 @@ from ..app import db
 from .comment import Comment
 
 
-class Post(db.Document):
+class Post(db.DynamicDocument):
     """ Post document definition """
 
     meta = {
@@ -19,8 +19,12 @@ class Post(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     title = db.StringField(max_length=255, required=True)
     slug = db.StringField(max_length=255, required=True)
-    body = db.StringField(required=True)
     comments = db.ListField(db.EmbeddedDocumentField('Comment'))
+
+    @property
+    def post_type(self):
+        """ post_type property """
+        return self.__class__.__name__
 
     def url(self):
         """ Return post url """
@@ -28,3 +32,25 @@ class Post(db.Document):
 
     def __unicode__(self):
         return self.title
+
+
+class BlogPost(Post):
+    """ Blog post """
+    body = db.StringField(required=True)
+
+
+class Video(Post):
+    """ Video """
+    embed_code = db.StringField(required=True)
+
+
+class Image(Post):
+    """ Image """
+    image_url = db.StringField(required=True, max_length=255)
+
+
+class Quote(Post):
+    """ Quote """
+    body = db.StringField(required=True)
+    author = db.StringField(verbose_name='Author Name', required=True,
+                            max_length=255)

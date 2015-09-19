@@ -1,4 +1,4 @@
 """ Models modules """
 
-from .post import Post
+from .post import Post, BlogPost, Video, Image, Quote
 from .comment import Comment
